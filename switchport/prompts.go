@@ -31,17 +31,17 @@ func newPromptsClient(apiKey, baseURL string) *PromptsClient {
 //
 // Args:
 //   - promptKey: The unique key of the prompt config
-//   - context: User/targeting context for routing (map or string)
+//   - user: User identification for routing (map or string)
 //   - variables: Variables to substitute in the prompt template
 //
 // Returns:
 //   - *PromptResponse: Response containing the generated text and metadata
 //   - error: PromptNotFoundError if the prompt config doesn't exist, APIError if the API request fails
-func (p *PromptsClient) Execute(promptKey string, context Context, variables map[string]interface{}) (*PromptResponse, error) {
+func (p *PromptsClient) Execute(promptKey string, user User, variables map[string]interface{}) (*PromptResponse, error) {
 	url := fmt.Sprintf("%s/api/sdk/v1/prompts/execute", p.baseURL)
 
-	// Normalize context and variables
-	normalizedContext := normalizeContext(context)
+	// Normalize user and variables
+	normalizedUser := normalizeUser(user)
 	if variables == nil {
 		variables = make(map[string]interface{})
 	}
@@ -49,7 +49,7 @@ func (p *PromptsClient) Execute(promptKey string, context Context, variables map
 	// Create request payload
 	payload := promptExecuteRequest{
 		PromptKey: promptKey,
-		Context:   normalizedContext,
+		User:      normalizedUser,
 		Variables: variables,
 	}
 

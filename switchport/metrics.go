@@ -32,17 +32,17 @@ func newMetricsClient(apiKey, baseURL string) *MetricsClient {
 // Args:
 //   - metricKey: The unique key of the metric definition
 //   - value: The metric value (float, int, bool, or string for enum)
-//   - context: User/targeting context for aggregation (map or string)
+//   - user: User identification for aggregation (map or string)
 //   - timestamp: Optional timestamp (defaults to now if nil)
 //
 // Returns:
 //   - *MetricRecordResponse: Response with success status and event ID
 //   - error: MetricNotFoundError if the metric definition doesn't exist, APIError if the API request fails
-func (m *MetricsClient) Record(metricKey string, value interface{}, context Context, timestamp *time.Time) (*MetricRecordResponse, error) {
+func (m *MetricsClient) Record(metricKey string, value interface{}, user User, timestamp *time.Time) (*MetricRecordResponse, error) {
 	url := fmt.Sprintf("%s/api/sdk/v1/metrics/record", m.baseURL)
 
-	// Normalize context
-	normalizedContext := normalizeContext(context)
+	// Normalize user
+	normalizedUser := normalizeUser(user)
 
 	// Format timestamp if provided
 	var timestampStr *string
@@ -55,7 +55,7 @@ func (m *MetricsClient) Record(metricKey string, value interface{}, context Cont
 	payload := metricRecordRequest{
 		MetricKey: metricKey,
 		Value:     value,
-		Context:   normalizedContext,
+		User:      normalizedUser,
 		Timestamp: timestampStr,
 	}
 

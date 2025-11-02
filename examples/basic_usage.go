@@ -32,7 +32,7 @@ func main() {
 	fmt.Println("============================================================")
 
 	// Example 1: Execute a simple prompt
-	fmt.Println("\n1. Executing prompt without context...")
+	fmt.Println("\n1. Executing prompt without user...")
 	response, err := client.Prompts.Execute(
 		"welcome-message",
 		nil,
@@ -55,8 +55,8 @@ func main() {
 		fmt.Printf("  Generated text:\n  %s\n", textPreview)
 	}
 
-	// Example 2: Execute prompt with context for A/B testing
-	fmt.Println("\n2. Executing prompt with context for A/B testing...")
+	// Example 2: Execute prompt with user for A/B testing
+	fmt.Println("\n2. Executing prompt with user for A/B testing...")
 	response, err = client.Prompts.Execute(
 		"product-description",
 		map[string]interface{}{
