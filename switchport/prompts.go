@@ -22,7 +22,7 @@ func newPromptsClient(apiKey, baseURL string) *PromptsClient {
 		apiKey:  apiKey,
 		baseURL: baseURL,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 120 * time.Second,
 		},
 	}
 }
