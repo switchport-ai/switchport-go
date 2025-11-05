@@ -2,8 +2,8 @@ package switchport
 
 import "time"
 
-// User can be either a map or a string for user identification
-type User interface{}
+// Subject can be either a map or a string for subject identification
+type Subject interface{}
 
 // PromptResponse represents the response from executing a prompt.
 type PromptResponse struct {
@@ -34,7 +34,7 @@ type MetricRecordResponse struct {
 // promptExecuteRequest represents the request payload for executing a prompt.
 type promptExecuteRequest struct {
 	PromptKey string                 `json:"prompt_key"`
-	User      map[string]interface{} `json:"user"`
+	Subject   map[string]interface{} `json:"subject"`
 	Variables map[string]interface{} `json:"variables"`
 }
 
@@ -42,21 +42,21 @@ type promptExecuteRequest struct {
 type metricRecordRequest struct {
 	MetricKey string                 `json:"metric_key"`
 	Value     interface{}            `json:"value"`
-	User      map[string]interface{} `json:"user"`
+	Subject   map[string]interface{} `json:"subject"`
 	Timestamp *string                `json:"timestamp,omitempty"`
 }
 
-// normalizeUser converts User to a map for JSON serialization.
-func normalizeUser(user User) map[string]interface{} {
-	if user == nil {
+// normalizeSubject converts Subject to a map for JSON serialization.
+func normalizeSubject(subject Subject) map[string]interface{} {
+	if subject == nil {
 		return make(map[string]interface{})
 	}
 
-	switch v := user.(type) {
+	switch v := subject.(type) {
 	case map[string]interface{}:
 		return v
 	case string:
-		return map[string]interface{}{"_user": v}
+		return map[string]interface{}{"_subject": v}
 	default:
 		return make(map[string]interface{})
 	}
