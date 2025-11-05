@@ -9,7 +9,7 @@ import (
 
 const (
 	// DefaultBaseURL is the production API URL
-	DefaultBaseURL = "https://api.switchport.ai"
+	DefaultBaseURL = "https://switchport-api.vercel.app"
 	// Version is the SDK version
 	Version = "0.1.0"
 )
